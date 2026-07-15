@@ -1,0 +1,16 @@
+# Local project-maintenance context
+/AGENTS.md
+/AGENTS.override.md
+/CLAUDE.md
+/CLAUDE.local.md
+/TODO.md
+/docs/
+
+# Local skill package artifacts
+/.agents/skills/*.zip
+
+# Editor and operating-system files
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db

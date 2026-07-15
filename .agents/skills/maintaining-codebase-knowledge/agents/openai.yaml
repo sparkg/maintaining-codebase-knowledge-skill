@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Codebase Knowledge"
+  short_description: "Maintain orthogonal, evidence-backed repository knowledge"
+  default_prompt: "Use $maintaining-codebase-knowledge to bootstrap, deepen, or refresh this repository's project knowledge with one canonical owner per durable fact and a task-ready development-workflow route."
