@@ -28,14 +28,32 @@ Maintaining Codebase Knowledge creates a navigable baseline, deepens it on deman
 
 ## Quick Start
 
-### 1. Choose a language variant
+### 1. Install a language variant
 
-Download or clone this repository, then copy one project-local skill directory into the target repository's `.agents/skills/` directory:
+The repository publishes two behaviorally equivalent skills. List them before installation if needed:
+
+```shell
+npx skills add sparkg/maintaining-codebase-knowledge-skill --list
+```
+
+Install one language variant into the current project:
+
+```shell
+# English
+npx skills add sparkg/maintaining-codebase-knowledge-skill --skill maintaining-codebase-knowledge
+
+# Chinese
+npx skills add sparkg/maintaining-codebase-knowledge-skill --skill maintaining-codebase-knowledge-zh
+```
+
+Append `--agent codex` to target Codex explicitly, `--global` for a user-level installation, or `-y` to skip confirmation prompts. Install only one language variant for a target repository.
+
+For manual installation, download or clone this repository, then copy one skill directory into the target repository's `.agents/skills/` directory:
 
 - English: `.agents/skills/maintaining-codebase-knowledge/`
 - Chinese: `.agents/skills/maintaining-codebase-knowledge-zh/`
 
-The variants are behaviorally equivalent; do not run both against the same target at the same time.
+Do not run both variants against the same target at the same time.
 
 ### 2. Bootstrap an existing repository
 

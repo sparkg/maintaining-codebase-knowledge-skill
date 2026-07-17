@@ -28,14 +28,32 @@
 
 ## 快速开始
 
-### 1. 选择语言版本
+### 1. 安装语言版本
 
-下载或克隆本仓库，然后将一个项目本地 Skill 目录复制到目标仓库的 `.agents/skills/` 目录：
+本仓库发布两个行为等价的 Skill。如有需要，可在安装前列出它们：
+
+```shell
+npx skills add sparkg/maintaining-codebase-knowledge-skill --list
+```
+
+将一个语言版本安装到当前项目：
+
+```shell
+# 英文版
+npx skills add sparkg/maintaining-codebase-knowledge-skill --skill maintaining-codebase-knowledge
+
+# 中文版
+npx skills add sparkg/maintaining-codebase-knowledge-skill --skill maintaining-codebase-knowledge-zh
+```
+
+追加 `--agent codex` 可明确指定 Codex，追加 `--global` 可安装到用户级目录，追加 `-y` 可跳过确认提示。对一个目标仓库只安装一个语言版本。
+
+如需手动安装，请下载或克隆本仓库，然后将一个 Skill 目录复制到目标仓库的 `.agents/skills/` 目录：
 
 - 英文：`.agents/skills/maintaining-codebase-knowledge/`
 - 中文：`.agents/skills/maintaining-codebase-knowledge-zh/`
 
-两个版本行为等价；不要同时在同一目标上运行二者。
+不要同时在同一目标上运行两个版本。
 
 ### 2. Bootstrap 现有仓库
 
