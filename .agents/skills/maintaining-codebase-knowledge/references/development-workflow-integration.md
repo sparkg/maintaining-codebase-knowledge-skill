@@ -1,29 +1,56 @@
-# Development Workflow Integration
+# Using Project Knowledge in a Development Workflow
 
-## Boundary
+## Division of responsibility
 
-This Skill supplies evidence-backed project knowledge. A consuming development workflow owns design, planning, isolation, implementation, TDD, debugging, review, verification, and delivery. Neither requires the other to be installed, and this Skill does not invoke, configure, or modify the consuming workflow.
+This Skill supplies project knowledge. The development workflow that reads it remains responsible for design, planning, workspace isolation, implementation, testing, debugging, review, verification, and delivery. The two are independent: this Skill does not invoke, configure, or modify the development workflow.
 
-## Consumption order
+## What to read before development
 
-Before design, planning, implementation, debugging, or review:
+Before design, implementation, debugging, or review:
 
-1. Follow the selected project-instruction bridge to `docs/project-knowledge/index.md`.
-2. Match the requested work to one intent-ledger row and its linked capability or flow when one exists.
-3. Apply the task-knowledge sufficiency gate from `knowledge-model.md`. When the request is absent or unrouted, or its route lacks task-critical entries, implementation mechanics, invariants, tests, placement evidence, or a current scoped snapshot, run task-scoped Deepen automatically. An existing index means this is not a Bootstrap request.
-4. Read task context or authorized canonical enterprise sources when the index or intent row requires them.
-5. Continue when Readiness is `ready`; run Deepen for `needs-deepen`; obtain the named human decision for `needs-decision`; resolve the named blocker for `blocked`.
+1. Open `docs/project-knowledge/index.md` by following the instruction in the repository's selected `AGENTS.md` or `CLAUDE.md`.
+2. If the index contains the requested work, read its intent row and the linked capability or flow documents. If it does not, run task-scoped Deepen directly from the request. Do not try to read an intent ledger that does not exist.
+3. Use the sufficiency checks in `knowledge-model.md` for the stage you want to enter. Run Deepen when the request is not recorded, is still `unrouted` because it does not point to a responsible document, or lacks enough detail. If the index already exists, the repository does not need another Bootstrap for this task.
+4. Read the current task context or an authorized enterprise source only when the index or intent row points to it.
+5. Follow the readiness result:
+   - `ready-for-design`: continue with design.
+   - `ready-for-implementation`: continue with implementation; the requirements for design are already included.
+   - `needs-deepen`: run Deepen.
+   - `needs-decision`: obtain the named product or authority decision.
+   - `blocked`: remove the named blocker.
 
-Use the capability document for current behavior, internal-area coverage, task-relevant symbols or state/algorithm mechanics, invariants, implementation evidence, and tests. Use the flow for cross-owner handoffs, and the intent row for task-specific missing input and readiness. Do not expect these documents to duplicate one another.
+An authorized design workflow may make local choices that have been delegated to it. Record an accepted choice in the task context or through Deepen before treating the task as ready for implementation.
 
-## Placement decisions
+Each document answers a different question:
 
-When requested work may change boundaries, read the architecture capability-to-unit map and module boundary basis, then the matching capability's change-placement evidence. This Skill reports current ownership, extension seams, boundary pressure, decision evidence, and unknowns; the owning design workflow makes the placement decision.
+- capability: what the capability currently does, how its own code works, which invariants hold, and how it is tested;
+- flow: how work is ordered and handed off between capabilities;
+- intent row: what the task requests, how it will be accepted, which task-specific risks remain, what input is missing, and whether work can continue;
+- onboarding: which setup, verification, and delivery requirements apply.
 
-Compare only evidence-supported choices: extend the existing capability through a seam, change cross-capability orchestration, introduce a separately owned capability or implementation unit, or refactor verified boundary pressure first. Record an accepted material boundary decision in the repository's decision artifact, then use Refresh after stable implementation to update current-state mappings.
+Link between these documents instead of copying the same fact into several places.
 
-## Completion gate
+## Deciding where a code change belongs
 
-After implementation stabilizes and before completion verification, run Refresh against the diff and material task evidence. Refresh canonical owners only, remove superseded managed claims, and return the grouped Result Contract. The consuming workflow then performs fresh verification and its own completion process.
+If a task may change a boundary, first read the architecture capability-to-implementation map and the evidence for the current boundary. Then read the relevant capability's placement evidence. This Skill reports current responsibilities, existing extension points, signs of boundary pressure, decision records, and unknowns. The design workflow chooses where the change should go.
 
-Ticket transitions, PRD edits, CI actions, review comments, and enterprise status changes require a separately authorized owning workflow. Any development workflow that respects this contract may consume the project-knowledge output.
+Compare only choices that the repository evidence supports:
+
+- extend the capability through an existing extension point;
+- change orchestration between capabilities;
+- introduce a capability or implementation unit with a separate responsibility; or
+- first refactor a boundary that evidence shows is already under pressure.
+
+Record an accepted, material boundary decision in the repository's decision record. After implementation stabilizes, use Refresh to update the current map.
+
+## Checks before completion
+
+After implementation stabilizes, run Refresh against the diff and task evidence. Update only the documents that own changed facts, remove statements that the implementation has replaced, and return the grouped Result Contract.
+
+Before completion, the development workflow must:
+
+1. verify every delivery requirement linked from the task;
+2. stop if any required signal is still failing or missing; and
+3. run fresh implementation checks and its own completion process.
+
+Moving a ticket, editing a PRD, starting CI, posting a review comment, or changing enterprise workflow state requires separate authorization in the system responsible for that action. Any development workflow may use the project knowledge as long as it follows these boundaries.

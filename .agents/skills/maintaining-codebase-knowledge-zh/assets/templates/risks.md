@@ -1,10 +1,10 @@
 <!-- codebase-knowledge:managed -->
-# 跨能力风险
+# 影响多个能力的风险
 
-最后验证：重要时记录 revision 和日期
+最后验证：相关时记录代码版本和日期
 
-| Risk | Confidence and evidence snapshot | Affected capabilities | Development impact | Trigger for action |
+| 风险 | 判断有多确定，证据是什么？ | 受影响的能力 | 对开发的影响 | 何时必须处理 |
 |---|---|---|---|---|
-| 已验证或假设的跨能力风险 | Confidence 加路径、命令、revision 或时间 | Canonical capability 链接 | 具体开发后果 | 可观察条件 |
+| 已验证的风险，或有证据支持的推测 | 可信程度，以及相关路径、命令、代码版本或日期 | 受影响的能力文档链接 | 对设计、实现、测试、交付或运行造成的具体后果 | 必须采取措施的可观察条件 |
 
-能力局部缺口留在 capability 文档，任务专属 blocker 留在 intent ledger 或 task context，有时间范围的本地环境失败留在运行结果。
+只影响一项能力的缺口留在对应的能力文档中。只影响当前任务的阻塞项留在意图台账或任务上下文中。临时的本地环境故障留在出现该故障的运行结果中。

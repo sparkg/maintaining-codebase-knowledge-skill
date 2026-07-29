@@ -1,14 +1,14 @@
 <!-- codebase-knowledge:managed -->
-# Enterprise external systems
+# External systems used during development
 
-Last verified: source version and date when material
+Last verified: source version and date, when relevant
 
-Create this document only when external systems materially affect development. Do not mirror records or store credentials.
+Create this document only when information from an external system affects development. Record how to find and handle that information; do not copy whole records or store credentials.
 
-| System | Purpose | Canonical identifiers | Owner | Read method | Source-of-truth rule | Freshness | Sensitivity | Write-back authority | Failure behavior |
+| System | Why development uses it | Stable identifiers | Responsible team | How it may be read | How to identify the authoritative record | When to read it again | Sensitivity | Who may write back | If it cannot be used |
 |---|---|---|---|---|---|---|---|---|---|
-| Platform or service | Task, PRD, CI, incident, policy, or documentation evidence | Stable ID or permitted link pattern | Owning team | Authorized connector, CLI, API, browser, or export | Controlling record/version | Re-read condition | Approved classification | Separate owning workflow | Mark unavailable, stale, or ambiguous |
+| Platform or service | Task, PRD, CI, incident, policy, or documentation evidence | Stable ID or permitted link pattern | Team responsible for the record | Authorized connector, CLI, API, browser, or export | Controlling record and version | Condition that makes the current information stale | Approved data classification | Separately authorized workflow responsible for the external system | Mark the source unavailable, stale, or ambiguous |
 
-## Task-context policy
+## Rules for saved task context
 
-Record approved location, retention, redaction, permitted fields, and ownership. If no safe persistence policy exists, keep evidence session-scoped and retain only allowed provenance and unresolved questions.
+Record where task context may be saved, how long it may be kept, what must be redacted, which fields are allowed, and who is responsible for it. If the repository has no safe persistence policy, keep the evidence in the current session and persist only permitted source identifiers and unresolved questions.

@@ -1,10 +1,10 @@
 <!-- codebase-knowledge:managed -->
-# Cross-capability risks
+# Risks that affect several capabilities
 
-Last verified: revision and date when material
+Last verified: code revision and date, when relevant
 
-| Risk | Confidence and evidence snapshot | Affected capabilities | Development impact | Trigger for action |
+| Risk | How certain is it, and what evidence supports it? | Affected capabilities | Effect on development | When action is required |
 |---|---|---|---|---|
-| Verified or hypothesized cross-capability risk | Confidence plus paths, commands, revision, or time | Canonical capability links | Concrete consequence | Observable condition |
+| Verified risk or evidence-backed hypothesis | Confidence level plus paths, commands, revision, or date | Links to the affected capability documents | Concrete consequence for design, implementation, testing, delivery, or operation | Observable condition that requires a response |
 
-Keep capability-local gaps in the capability document, task-specific blockers in the intent ledger or task context, and local time-scoped environment failures in the run result.
+Keep a gap that affects only one capability in that capability's document. Keep a task-specific blocker in the intent ledger or current task context. Keep a temporary local environment failure in the run result where it occurred.

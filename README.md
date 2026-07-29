@@ -2,41 +2,29 @@
 
 [中文](README_zh.md)
 
-Build and continuously maintain evidence-backed project knowledge so coding agents can take over existing repositories without repeatedly rediscovering the architecture, business capabilities, runtime flows, and development constraints.
+This skill helps a coding agent understand an existing repository and keep that understanding current as the code changes. It turns facts scattered across code, tests, configuration, documentation, and command output into a small set of project notes to read before development starts.
 
-- Discover repository structure and behavior from implementation evidence such as code, tests, configuration, schemas, and reproducible checks.
-- Bootstrap a selective baseline around instructions, architecture, commands, and one to five high-value capabilities.
-- Deepen only the capability or flow required for a feature, bug, or maintenance task.
-- Refresh only canonical knowledge affected by stable implementation changes.
-- Supply project knowledge to any development workflow that follows the documented consumption contract.
-- Provide behaviorally equivalent English and Chinese project-local skills.
-- Preserve user-authored documentation while managing only marked documents and instruction blocks.
+The first scan does not try to document the whole repository. Bootstrap makes the repository navigable; a concrete feature or bug then triggers Deepen for the relevant area. The skill maintains context. It does not design the change, edit production code, approve decisions, or replace testing and review.
 
-## Why This Project
+## Modes
 
-Existing repositories rarely lack information; they lack a small, current, evidence-backed route from a development request to the architecture, behavior, invariants, tests, and constraints that matter. Coding agents otherwise spend each task rediscovering the same codebase, or rely on broad summaries that become stale and blur intent with implementation.
+| Mode | Use it when | What it does |
+|---|---|---|
+| `Bootstrap` | The repository is unfamiliar or has no dependable knowledge index. | Records project rules, architecture, commands, one to five capabilities worth understanding first, and any flow that genuinely crosses several capabilities. Other areas remain available for later Deepen work. |
+| `Deepen` | You have a specific feature, bug, or maintenance task. | Investigates the relevant capability or flow and fills in the acceptance conditions, code paths, actual behavior, risks, tests, and delivery rules needed for the task. |
+| `Refresh` | An implementation has stabilized. | Reads the change and its verification evidence, then updates only the facts that changed. It is not a substitute for a fresh test run. |
 
-Maintaining Codebase Knowledge creates a navigable baseline, deepens it on demand, and refreshes it after implementation. It supplies reliable context without taking ownership of design, implementation, workflow state, human decisions, runtime verification, permissions, or external systems.
+## Quick start
 
-## How It Works
+### 1. Install one language version
 
-| Mode | When and what it maps |
-|---|---|
-| `Bootstrap` | For an unfamiliar repository or one without a reliable knowledge index. Maps project instructions, architecture, commands, one to five high-value capabilities, and only material cross-capability flows. |
-| `Deepen` | Starts from a requested feature, bug, maintenance intent, or routed ledger entry. Extracts task-critical symbols, state or algorithm behavior, invariants, tests, evidence, and placement signals without re-running Bootstrap. |
-| `Refresh` | Starts after implementation stabilizes. Inspects the change and updates only affected canonical knowledge before fresh completion verification. |
-
-## Quick Start
-
-### 1. Install a language variant
-
-The repository publishes two behaviorally equivalent skills. List them before installation if needed:
+List the skills in this repository:
 
 ```shell
 npx skills add sparkg/maintaining-codebase-knowledge-skill --list
 ```
 
-Install one language variant into the current project:
+Install either the English or Chinese version in the current project:
 
 ```shell
 # English
@@ -46,44 +34,44 @@ npx skills add sparkg/maintaining-codebase-knowledge-skill --skill maintaining-c
 npx skills add sparkg/maintaining-codebase-knowledge-skill --skill maintaining-codebase-knowledge-zh
 ```
 
-Append `--agent codex` to target Codex explicitly, `--global` for a user-level installation, or `-y` to skip confirmation prompts. Install only one language variant for a target repository.
+Add `--agent codex` to target Codex explicitly, `--global` for a user-level installation, or `-y` to skip confirmation. A target repository needs only one language version.
 
-For manual installation, download or clone this repository, then copy one skill directory into the target repository's `.agents/skills/` directory:
+For a manual installation, clone or download this repository and copy one of these directories into the target repository's `.agents/skills/` directory:
 
-- English: `.agents/skills/maintaining-codebase-knowledge/`
-- Chinese: `.agents/skills/maintaining-codebase-knowledge-zh/`
+- `.agents/skills/maintaining-codebase-knowledge/`
+- `.agents/skills/maintaining-codebase-knowledge-zh/`
 
-Do not run both variants against the same target at the same time.
+Do not run both versions against the same target at the same time.
 
-### 2. Bootstrap an existing repository
+### 2. Map the repository
 
-Replace `path/to/repository` only when running the prompt:
+Replace `path/to/repository` in this prompt:
 
 ```text
-Use $maintaining-codebase-knowledge in Bootstrap mode on path/to/repository. Build an evidence-backed project-knowledge baseline without modifying production code.
+Use $maintaining-codebase-knowledge in Bootstrap mode on path/to/repository. Build a project-knowledge baseline from repository evidence without modifying production code.
 ```
 
-Bootstrap selects the target repository's project instruction bridge—an existing `AGENTS.md`, an existing `CLAUDE.md`, or a newly created `AGENTS.md`—and routes subsequent development through `docs/project-knowledge/index.md`.
+Bootstrap uses an existing `AGENTS.md` or `CLAUDE.md` as the project's starting instruction file. If neither exists, it creates `AGENTS.md`. Future development work reads that file first and follows its pointer to `docs/project-knowledge/index.md`.
 
-### 3. Deepen for a feature or bug
+### 3. Prepare for a feature or bug
 
 ```text
 Use $maintaining-codebase-knowledge in Deepen mode for this task in path/to/repository: <feature or bug>. Update only the task-relevant intent, capability, flow, and evidence.
 ```
 
-Development begins at the selected project instruction bridge and `docs/project-knowledge/index.md`. If the task route is absent or too shallow, Deepen updates the smallest task-relevant knowledge set instead of re-Bootstrapping the repository.
+Deepen starts with the existing index. If the index does not yet point to the documents needed for the task, or those documents are too shallow, it adds only the missing knowledge instead of scanning the repository again.
 
-### 4. Refresh after implementation
+### 4. Update the notes after implementation
 
 ```text
-Use $maintaining-codebase-knowledge in Refresh mode on path/to/repository after the implementation has stabilized. Inspect the diff and verification evidence, then update only affected canonical knowledge.
+Use $maintaining-codebase-knowledge in Refresh mode on path/to/repository after the implementation has stabilized. Inspect the diff and verification evidence, then update only affected project knowledge.
 ```
 
-Refresh updates current-state documentation; the independent development workflow still performs fresh completion verification.
+Run tests and other pre-delivery checks after Refresh. Updated documentation does not prove that the code works.
 
-## Generated Project Knowledge
+## What Bootstrap creates
 
-A typical selective Bootstrap produces this structure at the resolved target repository root:
+A typical Bootstrap creates or reuses this structure in the target repository:
 
 ```text
 AGENTS.md or an existing CLAUDE.md
@@ -97,72 +85,78 @@ docs/project-knowledge/
 └── flows/
 ```
 
-- The selected project instruction bridge gives development workflows a stable pointer to the knowledge index and critical working agreements.
-- `index.md` is the small canonical entrypoint and navigation map for concrete project-knowledge routes.
-- `architecture.md` owns the system-wide structure, dependency direction, capability-to-implementation-unit mapping, boundary evidence, and default cross-cutting mechanisms.
-- `onboarding.md` owns stable prerequisites, commands, and reproducible project baselines.
-- `intent-ledger.md` routes requirements, backlog items, issues, and other intents to a capability or flow, with planning readiness and the next required action.
-- `risks.md` owns cross-capability reliability, security, compatibility, and operational risks.
-- `capabilities/` describes each selected business or domain ability, including current behavior, contracts, invariants, implementation evidence, and tests.
-- `flows/` owns reusable ordering and handoff contracts that cross two or more capability owners; local sequences remain in their capability document.
+| Document | Question it answers |
+|---|---|
+| `AGENTS.md` or `CLAUDE.md` | Where should an agent start, and which working rules must it follow? |
+| `index.md` | Which document should I read for this task? |
+| `architecture.md` | What are the main parts of the system, how do they depend on each other, and which code implements each capability? |
+| `onboarding.md` | How do I set up, run, and test the project? What delivery work is required for this type of change? |
+| `intent-ledger.md` | Which requirements, bugs, and backlog items are active? Which capability or flow documents apply to each one? What still needs a decision? |
+| `risks.md` | Which risks affect several features, and how could they affect reliability, security, compatibility, or operations? |
+| `capabilities/` | How does a business capability behave, where is its code, and how is it verified? |
+| `flows/` | When an operation passes through several capabilities, what is the order? How do they hand work off, and how do failures and side effects propagate? |
 
-`external-systems.md` is created only when external sources materially affect development. ADRs under `adr/` are created only when repository evidence and an accepted or explicitly proposed decision justify them. Other areas remain valid on-demand Deepen work rather than Bootstrap omissions that require a full rescan.
+The skill creates `external-systems.md` only when an outside source affects development. It creates an ADR only for an accepted or explicitly proposed decision that has supporting evidence. An undocumented area is not automatically a Bootstrap failure; Deepen can map it when a task needs it.
 
-## Development Loop
-
-This project supplies evidence-backed context. It does not own design, implementation, testing, review, delivery, or their workflow state.
+## How it fits into development
 
 ```mermaid
 flowchart LR
-    A[Bootstrap project knowledge] --> B[Receive feature, bug, or maintenance intent]
+    A[Bootstrap project knowledge] --> B[Receive a feature, bug, or maintenance task]
     B --> C[Deepen the relevant capability or flow]
     C --> D[Design, implement, test, and review]
-    D --> E[Refresh affected canonical knowledge]
-    E --> F[Fresh verification and delivery]
+    D --> E[Refresh changed project knowledge]
+    E --> F[Verify and deliver]
     F --> B
-    C -->|needs-decision or blocked| G[Obtain decision, evidence, permission, or environment]
+    C -->|needs-decision or blocked| G[Get a decision, evidence, permission, or environment]
     G --> C
 ```
 
-Any development workflow can consume the knowledge by following the selected instruction bridge to the index, then reading the routed intent, capability, and flow. A `needs-decision` or `blocked` result names the decision, evidence, permission, or environment change required before coding continues.
+A development workflow starts at the project instruction file, opens the index, and finds the documents for its task. The readiness result tells it whether to continue:
 
-## Evidence and Safety Principles
+- `ready-for-design`: the known facts are enough to make local design choices.
+- `ready-for-implementation`: the task contract, relevant mechanics, verification, and delivery conditions are clear enough to code.
+- `needs-deepen`, `needs-decision`, or `blocked`: the result names the missing knowledge or action.
 
-- Prefer code, tests, configuration, schemas, CI, deployment definitions, and fresh command output for the claim types they can support.
-- Keep intent, implementation support, confidence, planning readiness, persistence, and documentation depth separate.
-- Give every durable fact one canonical document owner and link to it elsewhere.
-- Treat business capabilities, cross-capability flows, and implementation modules as different concepts, then map their relationships with evidence.
-- Support clean VCS, dirty VCS, and no-VCS repositories with scoped revision or content-hash evidence snapshots.
-- Preserve user-authored content and structurally rewrite only documents or blocks carrying managed markers.
-- Do not expose secrets, modify production code, invent historical rationale, or treat documentation Refresh as proof that code works.
+The skill provides this handoff without depending on a particular development workflow or taking over design and implementation.
 
-## Enterprise and Conversation Context
+## How the notes stay trustworthy
 
-Explicitly provided or authorized PRDs, tickets, CI runs, incidents, conversation details, and document snapshots may be distilled into repository knowledge when they are stable, relevant, permitted, and sufficiently sourced. Enterprise systems remain canonical for the records they own. External writes, workflow transitions, CI actions, and other mutations require separate authorization from the owning workflow.
+Different claims need different evidence: code for current mechanics, tests and recent command output for verified behavior, configuration and schemas for external contracts, and authorized requirement sources for intended behavior.
 
-Credentials, customer data, private discussion, restricted source text, and content forbidden by repository policy are not persisted. Volatile workflow or operational state remains external, task-scoped, or session-only.
+Each durable fact is explained fully in one document and linked from the others. Capabilities, cross-capability flows, and code modules stay separate because they answer different questions.
 
-## Repository Layout
+If a task changes a public interface or another integration boundary, Deepen checks the applicable runtime behavior, types, schemas, examples, documentation, and tests. It also separates requested behavior from extra hardening suggested by code or test evidence.
+
+Whether or not the repository uses version control, and whether or not its working tree is clean, the skill records a revision or content hash to identify the code behind each evidence snapshot. It preserves user-written text and rewrites only its own managed files or marked blocks. It does not store secrets, invent historical rationale, modify production code, or claim that a Refresh proves correctness.
+
+## Enterprise systems and conversation context
+
+The skill can use a PRD, ticket, CI result, incident, conversation detail, or document snapshot when the user provides it or authorizes access. It records only the stable facts needed for development, together with enough source information to find the original record. The enterprise system remains the source of truth.
+
+Reading authorized context does not authorize writing back to that system. Workflow transitions, comments, CI actions, and other external changes still need explicit permission. Credentials, customer data, private discussion, restricted source text, and anything forbidden by repository policy are not written into project knowledge. Volatile status stays in the source system or the current task context.
+
+## Repository layout
 
 - `.agents/skills/maintaining-codebase-knowledge/` contains the English skill.
-- `.agents/skills/maintaining-codebase-knowledge-zh/` contains the behaviorally equivalent Chinese skill.
-- Each `SKILL.md` defines the operating modes, boundaries, intake, and result contract.
-- Each `references/` directory contains the knowledge model, external-context rules, and development-workflow consumption contract.
-- Each `assets/templates/` directory provides deterministic managed-document templates.
-- Each `agents/openai.yaml` supplies agent-facing skill metadata.
+- `.agents/skills/maintaining-codebase-knowledge-zh/` contains the equivalent Chinese skill.
+- `SKILL.md` defines the modes, boundaries, intake, and result contract.
+- `references/` holds the knowledge model and integration rules.
+- `assets/templates/` contains the managed-document templates.
+- `agents/openai.yaml` provides agent-facing metadata.
 
 ## Validation
 
-The release checks establish that:
+Static checks cover package format, UTF-8, bilingual structure, managed markers, and independence from a particular development framework. Those checks catch packaging mistakes, not weak project knowledge.
 
-- Both skill directories pass the official `quick_validate.py` validator.
-- The English and Chinese variants have matching package structure, operating modes, result contracts, references, and template roles.
-- The public skill packages do not depend on or integrate with a named development framework.
+For behavioral validation, a fresh development agent works on a repeatable repository task using the generated notes. The result is checked with focused tests of the requested behavior, the full regression suite, an exploration log, and code review, then compared with a no-document baseline. A documentation change is accepted only when development quality holds steady or improves.
 
 ## Contributing
 
-Keep English and Chinese behavior synchronized. Before submitting a change, run both official skill validators and regression checks for target-root resolution, project instruction bridge selection, managed markers, UTF-8, Bootstrap, Deepen, and Refresh. Preserve canonical ownership, avoid duplicated claims, and keep project-specific knowledge out of the reusable skills.
+Keep both language versions behaviorally equivalent. English may be used as the structural editing source, but the Chinese version should read naturally rather than mirror English word for word. Preserve the same rules, states, fields, and stop conditions in both versions.
+
+Before submitting a change, run both official validators, the bilingual structure checks, and the independent downstream scenarios affected by the change. Keep each fact with one owner, avoid repeated instructions, and do not add knowledge from a specific target repository to the reusable skill.
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+Released under the [MIT License](LICENSE).

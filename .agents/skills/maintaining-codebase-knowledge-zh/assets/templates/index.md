@@ -1,28 +1,30 @@
 <!-- codebase-knowledge:managed -->
 # 项目知识
 
-最后验证：重要时记录 revision 和日期
+最后验证：相关时记录代码版本和日期
 
-## 系统摘要
+从这里开始。根据当前任务找到最少且够用的文档。详细状态和实现说明留在对应文档中，不要复制到索引。
 
-用不超过五条稳定 bullet 描述用途、用户、运行时形态和重要边界。
+## 系统一览
+
+用不超过五条长期有效的信息说明：系统做什么、谁在使用、如何运行、主要边界在哪里，以及不熟悉仓库的人应该从哪里开始。
 
 ## 能力路由
 
-| Capability | Canonical document |
+| 能力 | 应阅读的文档 |
 |---|---|
-| 具体仓库能力 | `capabilities/<capability>.md` |
+| 仓库中的具体能力 | `capabilities/<capability>.md` |
 
 ## 意图路由
 
-存在重要开发 intent 时链接 `intent-ledger.md`。不要将 readiness 详情复制进 index。
+仓库中存在重要需求、Bug 或待办事项时，在这里链接 `intent-ledger.md`。任务是否就绪以及任务细节留在台账中，不要复制到索引。
 
 ## 跨能力流程
 
-只链接实际存在的可复用 flow。
+只链接真实存在、可以重复使用，并且描述多项能力协作顺序的流程文档。
 
-## 支撑知识
+## 辅助文档
 
-只链接实际存在且能实质指导开发的 architecture、onboarding、external-system、risk、glossary、ADR 或仓库自有文档。
+只链接确实存在且能指导开发的文档，例如架构、onboarding、外部系统、风险、术语表、ADR 或仓库自己的说明。
 
-不要添加通用任务类型表、命令输出、重复 unknown 清单或持久的工作流专属 handoff。开发工作流遵循 index → intent row → capability 或 flow。
+处理具体任务时，先查看 `intent-ledger.md` 中是否有匹配条目。如果有，读取该条目，再按其中的链接打开相关能力或流程文档；如果没有，则执行任务级 Deepen。不要在索引中加入通用任务分类表、命令输出、重复的未知项或某个开发流程专用的交接说明。

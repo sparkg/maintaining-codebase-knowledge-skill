@@ -1,15 +1,15 @@
 <!-- project-knowledge:start -->
 ## 关键工作约定
 
-- 实现前说明重要假设和歧义；不在差异重大的解释之间静默选择。
-- 只做已批准的最小变更；只修改任务需要的文件，保留本地约定，并报告无关问题而不机会主义修复。
-- 定义可观察的成功标准；不增加推测性功能、抽象或可配置性。
+- 暴露重要歧义；不要猜测。
+- 只做已批准的最小变更；保留约定；报告无关问题。
+- 定义可观察的成功标准；不增加推测内容。
 
-改编自 [multica-ai/andrej-karpathy-skills `CLAUDE.md`](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)。
+基于 [Karpathy guidelines](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)。
 
 ## 项目知识
 
-处理仓库工作前，阅读 `docs/project-knowledge/index.md`，再阅读匹配的 intent 和 capability 或 flow。
+处理仓库任务前，阅读 `docs/project-knowledge/index.md`。存在匹配的意图条目时，再读它所链接的能力或流程。
 
-任务缺失或未路由，或者关键机制、不变量、测试或证据缺失/过期时，执行任务范围的 Deepen。只有其 intent 为 `ready` 才继续；否则获得指定决策或解决 blocker。
+任务知识不足时执行 Deepen。达到 `ready-for-design` 才能进入设计；达到 `ready-for-implementation` 才能实现。否则先补决策或解决阻塞。
 <!-- project-knowledge:end -->

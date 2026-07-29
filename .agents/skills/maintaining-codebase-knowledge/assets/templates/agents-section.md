@@ -1,15 +1,15 @@
 <!-- project-knowledge:start -->
 ## Agreements
 
-- State material assumptions; never silently choose between materially different interpretations.
-- Make the minimum approved change; touch task-required files, preserve conventions, and report unrelated problems.
-- Define observable success; add no speculative features, abstractions, or configurability.
+- Expose material ambiguity; do not guess.
+- Make the minimum approved change; preserve conventions; report unrelated problems.
+- Define observable success; add nothing speculative.
 
-Adapted from [Karpathy guidelines](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md).
+Based on [Karpathy guidelines](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md).
 
 ## Project knowledge
 
-Before work, read `docs/project-knowledge/index.md`, then its matching intent and capability/flow.
+Before work, read `docs/project-knowledge/index.md`. If a matching intent exists, read it and its linked capability/flow.
 
-If a task has no route or lacks mechanics, invariants, tests, or evidence, run task-scoped Deepen. Proceed only at `ready`; otherwise get the decision or resolve the blocker.
+Deepen when task knowledge is insufficient. At `ready-for-design`, design may proceed; implementation requires `ready-for-implementation`. Otherwise obtain the decision or resolve the blocker.
 <!-- project-knowledge:end -->
